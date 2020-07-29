@@ -1,0 +1,64 @@
+package com.abelrose;
+
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+
+        int[] arr = {1, 3, 5, 7, 9, 2, 4, 6, 8};
+        findKth(arr,4);
+        System.out.println(Arrays.toString(arr));
+        System.out.println(findKth(arr, 2));
+    }
+
+
+    public static int findKth(int[] arr, int k){
+
+        arr = quickSort(arr,0, arr.length-1);
+// System.out.println(Arrays.toString(arr));
+// int dst = 0;
+        int dst = 1; // start from 1
+        for (int i = 0; i < arr.length; i++) {
+            // odd numbers
+            if(arr[i] % 2 == 1){
+
+                if(dst == k){
+                    return arr[i];
+                }
+                dst++;
+            }
+        }
+        return 0;
+
+    }
+
+    public static int[] quickSort(int[] arr, int start, int end){
+
+        if(start < end){
+
+            int sentinel = arr[start];
+            int low = start;
+            int high = end;
+
+            while (low<high){
+
+                while (low < high && arr[high] > sentinel){
+                    high--;
+                }
+                arr[low] = arr[high];
+
+                while (low < high && arr[low] < sentinel){
+                    low++;
+                }
+                arr[high] = arr[low];
+            }
+
+            arr[low] = sentinel;
+
+            quickSort(arr,start,low);
+            quickSort(arr,low+1,end);
+
+        }
+        return arr;
+    }
+}
